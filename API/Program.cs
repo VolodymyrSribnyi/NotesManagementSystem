@@ -36,13 +36,19 @@ namespace API
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
             builder.Services.AddScoped<INotesService, NotesService>();
+            builder.Services.AddScoped<IStatusesRepository, StatusesRepository>();
+            builder.Services.AddScoped<IStatusesService, StatusesService>();
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<NoteMapperProfile>();
             });
 
             var app = builder.Build();
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<NotesDbContext>();
+                db.Database.Migrate();
+            }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

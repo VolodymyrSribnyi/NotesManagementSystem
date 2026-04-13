@@ -18,7 +18,7 @@ namespace API.Migrations
                 columns: new[] { "Id", "Color", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("11111111-1111-1111-1111-111111111123"), "#gray", "Треба зробити", "To Do" },
+                    { new Guid("11111111-1111-1111-1111-111111111111"), "#gray", "Треба зробити", "To Do" },
                     { new Guid("22222222-2222-2222-2222-222222222222"), "#blue", "В процесі", "In Progress" },
                     { new Guid("33333333-3333-3333-3333-333333333333"), "#green", "Виконано", "Done" }
                 });

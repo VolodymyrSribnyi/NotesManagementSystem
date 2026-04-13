@@ -48,11 +48,11 @@ namespace API.Infrastructure.Repositories
 
             noteToUpdate.Name = note.Name;
             noteToUpdate.Description = note.Description;
-            noteToUpdate.Status = note.Status;
+            noteToUpdate.StatusId = note.StatusId;
 
             await _context.SaveChangesAsync();
 
-            return noteToUpdate;
+            return await Get(id);
         }
 
         private bool NoteExists(Guid id)

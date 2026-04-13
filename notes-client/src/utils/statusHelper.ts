@@ -1,9 +1,25 @@
-export const getStatusText = (status: number) => {
-    const statusMap: Record<number,string> = {
-        0: 'Done',     // 
-        1: 'In Process',    // 
-        2: 'NotS tarted', // 
-        3: 'Planned'   // 
+export interface StatusStyle {
+  badge: string;
+  dot: string;
+}
+
+export const getStatusStyle = (statusName: string): StatusStyle => {
+  const name = statusName?.toLowerCase();
+  if (name?.includes('progress')) {
+    return {
+      badge: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
+      dot: 'bg-blue-500',
     };
-    return statusMap[status] || 'Unknown';
+  }
+  if (name?.includes('done') || name?.includes('виконано')) {
+    return {
+      badge: 'bg-green-50 text-green-700 ring-1 ring-green-200',
+      dot: 'bg-green-500',
+    };
+  }
+  // To Do / default
+  return {
+    badge: 'bg-gray-100 text-gray-600 ring-1 ring-gray-200',
+    dot: 'bg-gray-400',
+  };
 };

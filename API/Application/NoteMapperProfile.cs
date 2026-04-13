@@ -10,12 +10,15 @@ namespace API.Application
         {
             CreateMap<CreateNoteDTO, Note>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
             CreateMap<NoteDTO, Note>();
             CreateMap<Note, NoteDTO>();
             CreateMap<UpdateNoteDTO, Note>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
+            CreateMap<Status, StatusDTO>();
         }
     }
 }

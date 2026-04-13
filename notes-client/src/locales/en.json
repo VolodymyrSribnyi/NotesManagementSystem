@@ -1,0 +1,29 @@
+{
+  "notes": {
+    "title": "My Notes",
+    "createBtn": "+ Create Note",
+    "empty": "You don't have any notes yet.",
+    "loading": "Loading notes... ⏳",
+    "error": "Error connecting to the server. 🛑",
+    "deleteConfirm": "Are you sure you want to delete this note?"
+  },
+  "form": {
+    "createTitle": "Create Note",
+    "editTitle": "Edit Note",
+    "nameLabel": "Note title",
+    "namePlaceholder": "Enter a title...",
+    "descLabel": "Description",
+    "descPlaceholder": "Add details...",
+    "statusLabel": "Status",
+    "selectStatus": "Select a status...",
+    "save": "Save changes",
+    "create": "Create note",
+    "cancel": "Cancel",
+    "back": "← Back to list"
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "status": "Status"
+}

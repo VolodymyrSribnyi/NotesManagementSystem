@@ -11,7 +11,6 @@ namespace API.Application.DTOs
         [Required]
         public required string Description { get; set; }
         [Required]
-        [MaxLength(50)]
-        public Status Status { get; set; }
+        public Guid StatusId { get; set; }
     }
 }

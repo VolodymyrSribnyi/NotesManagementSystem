@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "Notes@Strong1"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/lib/mssql/data
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd","-S","localhost","-U","sa","-P","Notes@Strong1","-Q","SELECT 1"]
+      interval: 10s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "5157:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__default: "Server=db,1433;Database=NotesDB;User Id=sa;Password=Notes@Strong1;TrustServerCertificate=True;"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: notes-client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  sqldata:

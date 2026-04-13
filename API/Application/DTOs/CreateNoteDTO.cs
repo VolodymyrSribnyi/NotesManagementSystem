@@ -9,5 +9,7 @@ namespace API.Application.DTOs
         public required string Name { get; set; }
         [Required]
         public required string Description { get; set; }
+        [Required]
+        public Guid StatusId { get; set; }
     }
 }
