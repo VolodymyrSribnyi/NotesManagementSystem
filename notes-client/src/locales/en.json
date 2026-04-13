@@ -25,5 +25,9 @@
     "edit": "Edit",
     "delete": "Delete"
   },
-  "status": "Status"
+  "status": "Status",
+  "stats": {
+  "total": "Total notes",
+  "done": "Completed"
+}
 }
