@@ -11,9 +11,11 @@ test('should create a new note and display it in the list', async ({ page }) => 
   await page.fill('input[name="name"]', 'E2E Test Note');
   await page.fill('textarea[name="description"]', 'Created by Playwright test');
 
-  // Чекаємо завантаження статусів і обираємо перший
-  await page.waitForSelector('select[name="statusId"] option:not([value=""])');
-  await page.selectOption('select[name="statusId"]', { index: 1 });
+  // Чекаємо завантаження статусів (перевіряємо, що вони додані в DOM)
+  const statusSelect = page.locator('select[name="statusId"]');
+  await expect(statusSelect.locator('option').nth(1)).toBeAttached();
+  
+  await statusSelect.selectOption({ index: 1 });
 
   // Сабмітимо форму
   await page.click('button[type="submit"]');

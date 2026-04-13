@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -17,8 +15,8 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: API/Dockerfile
+      context: ./API
+      dockerfile: Dockerfile
     ports:
       - "5157:80"
     environment:
@@ -30,7 +28,7 @@ services:
 
   client:
     build:
-      context: notes-client
+      context: ./notes-client
       dockerfile: Dockerfile
     ports:
       - "5173:80"
