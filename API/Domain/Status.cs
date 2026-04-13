@@ -1,10 +1,10 @@
 ﻿namespace API.Domain
 {
-    public enum Status
+    public class Status
     {
-        Done,
-        InProcess,
-        NotStarted,
-        Planned
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Color { get; set; }
     }
 }

@@ -1,13 +1,7 @@
 ﻿using API.Application.DTOs;
 using API.Domain;
 using API.Domain.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -22,6 +16,10 @@ namespace API.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Returns all notes
+        /// </summary>
+        /// <returns>List of notes</returns>
         // GET: api/Notes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
@@ -31,6 +29,11 @@ namespace API.Controllers
             return Ok(notes);
         }
 
+        /// <summary>
+        /// Returns single note
+        /// </summary>
+        /// <param name="id">Id of the note</param>
+        /// <returns>Note</returns>
         // GET: api/Notes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<NoteDTO>> GetNote(Guid id)
@@ -45,20 +48,29 @@ namespace API.Controllers
             return Ok(note);
         }
 
+        /// <summary>
+        /// Updates single note
+        /// </summary>
+        /// <param name="id">Id of the note</param>
+        /// <param name="note">Updated note</param>
+        /// <returns></returns>
         // PUT: api/Notes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNote(Guid id, NoteDTO note)
+        public async Task<IActionResult> PutNote(Guid id, UpdateNoteDTO note)
         {
-            if (id != note.Id)
-            {
-                return BadRequest();
-            }
-            await _service.Update(note);
+            var updated = await _service.Update(id,note);
+
+            if (updated == null)
+                return NotFound();
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new note
+        /// </summary>
+        /// <param name="note">Note to create</param>
+        /// <returns>Created note</returns>
         // POST: api/Notes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -69,15 +81,20 @@ namespace API.Controllers
             return CreatedAtAction("GetNote", new { id = createdNote.Id }, createdNote);
         }
 
+        /// <summary>
+        /// Deletes note
+        /// </summary>
+        /// <param name="id">Id of the note</param>
+        /// <returns></returns>
         // DELETE: api/Notes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNote(Guid id)
         {
-            await _service.Delete(id);
+            var deleted = await _service.Delete(id);
+            if (deleted == null)
+                return NotFound();
 
             return NoContent();
         }
-
-        
     }
 }

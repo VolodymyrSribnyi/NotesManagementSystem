@@ -17,9 +17,19 @@ namespace API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
             builder.Services.AddDbContext<NotesDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("default"));
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -30,23 +40,8 @@ namespace API
             {
                 cfg.AddProfile<NoteMapperProfile>();
             });
-            
 
             var app = builder.Build();
-
-            //using(var scope = app.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    try
-            //    {
-            //        var context = services.GetRequiredService<NotesDbContext>();
-            //        context.Database.EnsureCreated();
-            //    }
-            //    catch(Exception ex) 
-            //    {
-            //        Console.WriteLine(ex.Message);
-            //    }
-            //}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -62,6 +57,8 @@ namespace API
             });
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowReactApp");
 
             app.UseAuthorization();
 

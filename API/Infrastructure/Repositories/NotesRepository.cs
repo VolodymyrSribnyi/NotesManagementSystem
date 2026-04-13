@@ -29,22 +29,23 @@ namespace API.Infrastructure.Repositories
 
         public async Task<Note> Get(Guid id)
         {
-            Note note = await _context.Notes.FindAsync(id);
+            Note note = await _context.Notes.Include(n => n.Status).FirstOrDefaultAsync(n => n.Id == id);
             return note;
         }
 
         public async Task<IEnumerable<Note>> GetAll()
         {
-            IEnumerable<Note> notes = await _context.Notes.ToListAsync();
+            IEnumerable<Note> notes = await _context.Notes.Include(n => n.Status).ToListAsync();
 
             return notes;
         }
 
-        public async Task<Note> Update(Note note)
+        public async Task<Note> Update(Guid id,Note note)
         {
-            Note noteToUpdate = await Get(note.Id);
+            Note noteToUpdate = await Get(id);
+            if (noteToUpdate == null)
+                return null;
 
-            noteToUpdate.Id = note.Id;
             noteToUpdate.Name = note.Name;
             noteToUpdate.Description = note.Description;
             noteToUpdate.Status = note.Status;

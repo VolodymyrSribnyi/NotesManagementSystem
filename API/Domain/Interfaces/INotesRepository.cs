@@ -7,7 +7,7 @@ namespace API.Domain.Interfaces
         Task<Note> Get(Guid id);
         Task<IEnumerable<Note>> GetAll();
         Task<Note> Create(Note note);
-        Task<Note> Update(Note note);
+        Task<Note> Update(Guid id,Note note);
         Task<Note> Delete(Guid id);
     }
 }

@@ -8,9 +8,14 @@ namespace API.Application
     {
         public NoteMapperProfile()
         {
-            CreateMap<CreateNoteDTO, Note>().ForMember(dest => dest.Id, opt => opt.Ignore()).ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+            CreateMap<CreateNoteDTO, Note>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             CreateMap<NoteDTO, Note>();
             CreateMap<Note, NoteDTO>();
+            CreateMap<UpdateNoteDTO, Note>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
         }
     }
 }

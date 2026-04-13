@@ -64,21 +64,17 @@ namespace API.Application
         {
             var notes = await _repository.GetAll();
 
-            if(!notes.Any())
-                return Enumerable.Empty<NoteDTO>();
-
             return _mapper.Map<IEnumerable<NoteDTO>>(notes);
         }
 
-        public async Task<NoteDTO> Update(NoteDTO note)
+        public async Task<NoteDTO> Update(Guid id,UpdateNoteDTO note)
         {
-            var noteToUpdate = await _repository.Get(note.Id);
+            var noteToUpdate = _mapper.Map<Note>(note);
 
-            if (noteToUpdate == null)
-            {
+            var updatedNote = await _repository.Update(id,noteToUpdate);
+
+            if (updatedNote == null)
                 return null;
-            }
-            var updatedNote = await _repository.Update(_mapper.Map<Note>(note));
 
             return _mapper.Map<NoteDTO>(updatedNote);
         }
